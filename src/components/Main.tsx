@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Container, Stack, useTheme } from "@mui/material";
 import { useRecoilValue } from "recoil";
 import { embedPropsState, embedStyleState, embedTypeState, siteNameState } from "../store";
 import { useEffect, useMemo, useRef, useState } from "react";

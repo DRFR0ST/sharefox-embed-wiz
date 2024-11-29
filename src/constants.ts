@@ -18,7 +18,7 @@ import { EmbedType } from "./types";
 export const EMBED_STYLE = {
     'popular-products': {
         width: "850px",
-        height: "282px"
+        height: "284px"
     },
     'simple-search': {
         width: "850px",

@@ -4,7 +4,7 @@ import { EmbedType } from "./types";
 
 export const siteNameState = atom({
   key: 'siteNameState', // unique ID (with respect to other atoms/selectors)
-  default: 'bilutleie1', // default value (aka initial value)
+  default: 'carrentaltestsite', // default value (aka initial value)
 });
 
 export const embedTypeState = atom<EmbedType>({

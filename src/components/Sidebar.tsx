@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { siteNameState, embedTypeState, embedPropsState, embedStyleState } from "../store";
 import { EMBED_FIELDS, EMBED_STYLE } from "../constants";
 import { EmbedType } from "../types";
-import { Help } from "@mui/icons-material";
+import { Favorite, Help } from "@mui/icons-material";
 
 function Sidebar() {
     const [siteName, setSiteName] = useRecoilState(siteNameState);
@@ -105,7 +105,9 @@ function Sidebar() {
                             }} />
                 </Box>
             </Stack>
-            <Stack></Stack>
+            <Stack>
+                <Typography fontSize={10}>Made with <Favorite sx={{ fontSize: 9, color: "#FF0000" }} /> by Mike</Typography>
+            </Stack>
         </Stack>
     </Container>
 }

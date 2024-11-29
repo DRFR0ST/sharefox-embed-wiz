@@ -27,7 +27,7 @@ export const EMBED_FIELDS: Record<EmbedType, Record<string, { type: string, valu
     'simple-search': {
         'products-path': {
             type: "string",
-            value: "",
+            value: "/products",
             label: "Products Path",
             description: "The subpage of the “products” page. It will be used in the redirect after submitting the search query.",
         }
@@ -35,7 +35,7 @@ export const EMBED_FIELDS: Record<EmbedType, Record<string, { type: string, valu
     'advanced-search': {
         'products-path': {
             type: "string",
-            value: "",
+            value: "/products",
             label: "Products Path",
             description: "The subpage of the “products” page. It will be used in the redirect after submitting the search query.",
         }

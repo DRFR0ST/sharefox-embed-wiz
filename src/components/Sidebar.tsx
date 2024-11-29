@@ -1,9 +1,10 @@
 import { Box, Container, Divider, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, TextField, Tooltip, Typography, useTheme } from "@mui/material";
 import { useRecoilState } from "recoil";
 import { siteNameState, embedTypeState, embedPropsState, embedStyleState } from "../store";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { EMBED_FIELDS, EMBED_STYLE } from "../constants";
 import { EmbedType } from "../types";
-import { Favorite, Help } from "@mui/icons-material";
+import { Favorite } from "@mui/icons-material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { useRef, useState } from "react";
@@ -67,11 +68,11 @@ function Sidebar() {
         }, 700);
     }
 
-    return <Container sx={{ backgroundColor: theme.palette.background.paper, height: "100%", py: 2 }}>
+    return <Container sx={{ backgroundColor: theme.palette.background.paper, height: "98%", marginTop: "2%", marginLeft: "2%", borderRadius: theme.shape.borderRadius, py: 2 }}>
         <Stack justifyContent="space-between" alignItems="center" height="100%" width="100%">
             <Stack alignItems="center" justifyContent="center" width="70%" spacing={1} pt={2}>
                 <img src="https://sharefox.co/wp-content/uploads/2022/05/Sharefox_logo_dark.svg" alt="Sharefox Logo" />
-                <Typography>Embed Wizard</Typography>
+                <Typography style={{ opacity: 0.6 }}>Embed Wizard</Typography>
             </Stack>
             <Stack spacing={2} direction="column" height="100%" width="100%" alignItems="center" justifyContent="center">
                 <Box width="100%" >
@@ -104,6 +105,8 @@ function Sidebar() {
                     <Divider />
                 </Box>
 
+                <Typography gutterBottom style={{ opacity: 0.6 }}>Embed Properties</Typography>
+
                 {Object.keys(embedProps).map((key, index) => {
                     const field = embedProps[key];
 
@@ -116,7 +119,7 @@ function Sidebar() {
                             InputProps={{
                                 endAdornment: <Tooltip title={field?.description}>
                                     <IconButton size="small">
-                                        <Help fontSize={"10px"} />
+                                        <HelpOutlineIcon fontSize={"10px"} />
                                     </IconButton>
                                 </Tooltip>
                             }} />
@@ -127,7 +130,7 @@ function Sidebar() {
                     <TextField fullWidth value={embedStyle.width} onChange={(e) => setEmbedStyleProp("width", e.target.value)} label="Width" InputProps={{
                         endAdornment: <Tooltip title="The width of the iframe inside of which the embed will be displayed.">
                             <IconButton size="small">
-                                <Help fontSize={"10px"} />
+                                <HelpOutlineIcon fontSize={"10px"} />
                             </IconButton>
                         </Tooltip>
                     }} />
@@ -137,7 +140,7 @@ function Sidebar() {
                     <TextField fullWidth value={embedStyle.height} onChange={(e) => setEmbedStyleProp("height", e.target.value)} label="Height" InputProps={{
                         endAdornment: <Tooltip title="The height of the iframe inside of which the embed will be displayed.">
                             <IconButton size="small">
-                                <Help fontSize={"10px"} />
+                                <HelpOutlineIcon fontSize={"10px"} />
                             </IconButton>
                         </Tooltip>
                     }} />
@@ -147,14 +150,14 @@ function Sidebar() {
                     <TextField sx={{ maxHeight: "200px" }} multiline fullWidth value={`width: 100%;\nheight: 300px;\n`} onChange={console.log} label="Inline CSS" InputProps={{
                         endAdornment: <Tooltip title="The height of the iframe inside of which the embed will be displayed.">
                             <IconButton size="small">
-                                <Help fontSize={"10px"} />
+                                <HelpOutlineIcon fontSize={"10px"} />
                             </IconButton>
                         </Tooltip>
                     }} />
                 </Box> */}
             </Stack>
             <Stack>
-                <Typography fontSize={10}>Made with <Favorite sx={{ fontSize: 9, color: "#FF0000" }} /> by Mike</Typography>
+                <Typography fontSize={11}>Made with <Favorite sx={{ fontSize: 9, color: "#FF0000" }} /> by Mike @ Sharefox</Typography>
             </Stack>
         </Stack>
     </Container>

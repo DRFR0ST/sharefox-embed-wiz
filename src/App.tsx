@@ -21,6 +21,9 @@ const theme = createTheme({
       paper: "#eff5f1"
     }
   },
+  typography: {
+    fontFamily: '"Afacad Flux", sans-serif',
+  },
 });
 
 function App() {

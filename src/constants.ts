@@ -1,13 +1,28 @@
 import { EmbedType } from "./types";
 
+// export const EMBED_STYLE = {
+//     'popular-products': {
+//         width: "100%",
+//         height: "282px"
+//     },
+//     'simple-search': {
+//         width: "100%",
+//         height: "90px"
+//     },
+//     'advanced-search': {
+//         width: "346px",
+//         height: "440px"
+//     }
+// }
+
 export const EMBED_STYLE = {
     'popular-products': {
-        width: "100%",
+        width: "850px",
         height: "282px"
     },
     'simple-search': {
-        width: "100%",
-        height: "90px"
+        width: "850px",
+        height: "66px"
     },
     'advanced-search': {
         width: "346px",

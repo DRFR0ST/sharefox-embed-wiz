@@ -121,7 +121,7 @@ function Main() {
         <Stack direction="column" width="100%" height="calc(100vh-64px)" alignItems="center" justifyContent="center">
             <Stack alignItems="center" justifyContent="center" width="100%" height="70vh">
                 {mountDiv && <div ref={embedContainerRef} style={{ maxWidth: "850px", width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center', border: `4px dashed #e9efec` }} key={Math.random().toString() + embedType} dangerouslySetInnerHTML={{ __html: div! }} />}
-                {embedContainerRect.width && <Typography sx={{ mt: 1, opacity: 0.4 }} fontSize={13}>{embedContainerRect.width} x {embedContainerRect.height}</Typography>}
+                {embedContainerRect.width ? <Typography sx={{ mt: 1, opacity: 0.4 }} fontSize={13}>{embedContainerRect.width} x {embedContainerRect.height}</Typography> : null}
             </Stack>
             <Box sx={{ width: "100%", overflowX: "scroll", p: 2, backgroundColor: theme.palette.background.paper, borderRadius: theme.shape.borderRadius }}>
                 <Editor 

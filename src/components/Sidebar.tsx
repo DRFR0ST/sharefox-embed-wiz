@@ -1,51 +1,33 @@
 import { Box, Container, Divider, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, TextField, Tooltip, Typography, useTheme } from "@mui/material";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { siteNameState, embedTypeState, embedPropsState, embedStyleState } from "../store";
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { EMBED_FIELDS, EMBED_STYLE } from "../constants";
 import { EmbedType } from "../types";
 import { Favorite } from "@mui/icons-material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { useRef, useState } from "react";
+import Form from "./Form";
+import { flattenEmbedFields } from "../utils";
 
 function Sidebar() {
     const [siteName, setSiteName] = useRecoilState(siteNameState);
     const [embedType, setEmbedType] = useRecoilState(embedTypeState);
 
-    const [embedProps, setEmbedProps] = useRecoilState(embedPropsState);
-    const [embedStyle, setEmbedStyle] = useRecoilState(embedStyleState);
+    const setEmbedProps = useSetRecoilState(embedPropsState);
+    const setEmbedStyle = useSetRecoilState(embedStyleState);
 
     const [siteExists, setSiteExists] = useState(true);
 
     const onEmbedTypeChange = (event: any) => {
-        setEmbedType(event.target.value as EmbedType);
-        setEmbedProps(EMBED_FIELDS[event.target.value]);
-        setEmbedStyle(EMBED_STYLE[event.target.value]);
+        const nextEmbedType = event.target.value as EmbedType;
+        setEmbedType(nextEmbedType);
+
+        setEmbedProps(flattenEmbedFields(EMBED_FIELDS[nextEmbedType]));
+        setEmbedStyle(EMBED_STYLE[nextEmbedType]);
     }
 
     const theme = useTheme();
-
-    const setEmbedProperty = (property: EmbedType, value: any) => {
-        setEmbedProps(currValue => {
-            return {
-                ...currValue,
-                [property]: {
-                    ...currValue[property],
-                    value
-                }
-            }
-        });
-    }
-
-    const setEmbedStyleProp = (property: keyof typeof embedStyle, value: any) => {
-        setEmbedStyle(currValue => {
-            return {
-                ...currValue,
-                [property]: value
-            }
-        });
-    };
 
     const timeout = useRef(null);
 
@@ -74,6 +56,7 @@ function Sidebar() {
                 <img src="https://sharefox.co/wp-content/uploads/2022/05/Sharefox_logo_dark.svg" alt="Sharefox Logo" />
                 <Typography style={{ opacity: 0.6 }}>Embed Wizard</Typography>
             </Stack>
+
             <Stack spacing={2} direction="column" height="100%" width="100%" alignItems="center" justifyContent="center">
                 <Box width="100%" >
                     <TextField 
@@ -107,54 +90,7 @@ function Sidebar() {
 
                 <Typography gutterBottom style={{ opacity: 0.6 }}>Embed Properties</Typography>
 
-                {Object.keys(embedProps).map((key, index) => {
-                    const field = embedProps[key];
-
-                    return <Box key={index} sx={{ width: "100%" }}>
-                        <TextField
-                            fullWidth value={field?.value || ""}
-                            type={field?.type}
-                            onChange={(e) => setEmbedProperty(key as EmbedType, e.target.value)}
-                            label={field?.label}
-                            InputProps={{
-                                endAdornment: <Tooltip title={field?.description}>
-                                    <IconButton size="small">
-                                        <HelpOutlineIcon fontSize={"10px"} />
-                                    </IconButton>
-                                </Tooltip>
-                            }} />
-                    </Box>
-                })}
-
-                <Box sx={{ width: "100%" }}>
-                    <TextField fullWidth value={embedStyle.width} onChange={(e) => setEmbedStyleProp("width", e.target.value)} label="Width" InputProps={{
-                        endAdornment: <Tooltip title="The width of the iframe inside of which the embed will be displayed.">
-                            <IconButton size="small">
-                                <HelpOutlineIcon fontSize={"10px"} />
-                            </IconButton>
-                        </Tooltip>
-                    }} />
-                </Box>
-
-                <Box sx={{ width: "100%" }}>
-                    <TextField fullWidth value={embedStyle.height} onChange={(e) => setEmbedStyleProp("height", e.target.value)} label="Height" InputProps={{
-                        endAdornment: <Tooltip title="The height of the iframe inside of which the embed will be displayed.">
-                            <IconButton size="small">
-                                <HelpOutlineIcon fontSize={"10px"} />
-                            </IconButton>
-                        </Tooltip>
-                    }} />
-                </Box>
-
-                {/* <Box sx={{ width: "100%" }}>
-                    <TextField sx={{ maxHeight: "200px" }} multiline fullWidth value={`width: 100%;\nheight: 300px;\n`} onChange={console.log} label="Inline CSS" InputProps={{
-                        endAdornment: <Tooltip title="The height of the iframe inside of which the embed will be displayed.">
-                            <IconButton size="small">
-                                <HelpOutlineIcon fontSize={"10px"} />
-                            </IconButton>
-                        </Tooltip>
-                    }} />
-                </Box> */}
+                <Form />
             </Stack>
             <Stack>
                 <Typography fontSize={11}>Made with <Favorite sx={{ fontSize: 9, color: "#FF0000" }} /> by Mike @ Sharefox</Typography>

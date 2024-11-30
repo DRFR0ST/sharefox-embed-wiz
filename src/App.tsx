@@ -32,6 +32,7 @@ function App() {
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        
         <Stack direction="row" width="100vw" height="100vh">
           <Box sx={{ flex: 2, height: "100%" }}>
             <Sidebar />

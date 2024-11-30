@@ -1,12 +1,12 @@
-#root {
+#root {}
 
-}
-
-html, body {
+html,
+body {
     overflow: hidden;
     background-color: #f5fbf7;
 }
 
-.editor textarea, .monaco-editor {
+.editor textarea,
+.monaco-editor {
     outline: 0 !important;
-  }
+}

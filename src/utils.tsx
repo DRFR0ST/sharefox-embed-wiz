@@ -1,4 +1,4 @@
-
+import { EMBED_FIELDS } from "./constants";
 
 export const generateEmbedScript = ({siteName}: { siteName: string }) => {
     return `<script id="sharefox-embed-script" data-shop="${siteName}" src="https://${siteName}.mysharefox.com/embed.min.js" async></script>`;
@@ -20,7 +20,7 @@ export const generateEmbedDiv = ({ embedType, siteName }: { embedType: string, s
 
     try {
         for(const prop in embedProps) {
-            props += ` ${prop !== "width" && prop !== 'height' ? 'data-' : ''}${prop}="${embedProps[prop].value}"`;
+            props += ` ${prop !== "width" && prop !== 'height' ? 'data-' : ''}${prop}="${embedProps[prop]}"`;
         }
     } catch(err) {
         props = "";
@@ -45,4 +45,11 @@ export const generateEmbedDiv = ({ embedType, siteName }: { embedType: string, s
         case 'advanced-search':
             return `<div data-path="search-advanced" class="sharefox-embed" data-shop="${siteName}"${props} style="${style}"></div>`;
     }
+}
+
+export const flattenEmbedFields = (embedFields: typeof EMBED_FIELDS[keyof typeof EMBED_FIELDS]) => {
+    return Object.keys(embedFields).reduce((acc, key) => {
+        acc[key] = embedFields[key].value;
+        return acc;
+    }, {});
 }

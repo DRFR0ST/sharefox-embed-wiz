@@ -27,7 +27,11 @@ export const EMBED_STYLE = {
     'advanced-search': {
         width: "346px",
         height: "440px"
-    }
+    },
+    'product-booking': {
+        width: "346px",
+        height: "440px"
+    },
 }
 
 export const EMBED_FIELDS: Record<EmbedType, Record<string, { type: string, value: any, label: string, description: string }>> = {
@@ -53,6 +57,14 @@ export const EMBED_FIELDS: Record<EmbedType, Record<string, { type: string, valu
             value: "/products",
             label: "Products Path",
             description: "The subpage of the “products” page. It will be used in the redirect after submitting the search query.",
+        }
+    },
+    'product-booking': {
+        'product-id': {
+            type: "number",
+            value: 1013,
+            label: "Product ID",
+            description: "The ID of the product to display in the embed."
         }
     }
 }

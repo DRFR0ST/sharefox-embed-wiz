@@ -44,6 +44,8 @@ export const generateEmbedDiv = ({ embedType, siteName }: { embedType: string, s
             return `<div data-path="search" class="sharefox-embed" data-shop="${siteName}"${props} style="${style}"></div>`;
         case 'advanced-search':
             return `<div data-path="search-advanced" class="sharefox-embed" data-shop="${siteName}"${props} style="${style}"></div>`;
+        case 'product-booking':
+            return `<div data-path="product-booking" class="sharefox-embed" data-shop="${siteName}"${props} style="${style}"></div>`;
     }
 }
 

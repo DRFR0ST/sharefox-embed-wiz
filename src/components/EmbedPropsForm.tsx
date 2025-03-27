@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { embedTypeState } from "../store";
 import { EMBED_FIELDS } from "../constants";
-import { Box, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 
 interface EmbedPropsForm {
 
@@ -24,6 +24,7 @@ const EmbedPropsForm = ({ }: EmbedPropsForm) => {
                             label={EMBED_FIELDS[embedType][key].label}
                             type={EMBED_FIELDS[embedType][key].type}
                             helperText={EMBED_FIELDS[embedType][key].description}
+                            defaultValue={EMBED_FIELDS[embedType][key].value}
                             error={Boolean(errors[key])}
                             {...register(key, { required: true })}
                         />

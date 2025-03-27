@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useRecoilValue } from "recoil";
-import { embedPropsState, embedStyleState, embedTypeState, siteNameState } from "./store";
+import { embedPropsState, embedStyleState, embedTypeState, embedUrlState, hostnameState, siteNameState } from "./store";
 import { generateEmbedScript } from "./utils";
 
 /**
@@ -13,8 +13,10 @@ export const useSiteScript = () => {
     const embedType = useRecoilValue(embedTypeState);
     const embedProps = useRecoilValue(embedPropsState);
     const embedStyle = useRecoilValue(embedStyleState);
+    const hostname = useRecoilValue(hostnameState);
+    const embedUrl = useRecoilValue(embedUrlState);
 
-    const script = useMemo(() => generateEmbedScript({ siteName }), [siteName]);
+    const script = useMemo(() => generateEmbedScript({ siteName, hostname, embedUrl }), [siteName, hostname, embedUrl]);
 
     useEffect(() => {
         if(!siteName) {
@@ -23,10 +25,16 @@ export const useSiteScript = () => {
         }
 
         const _script = document.createElement('script');
-        _script.src = `https://${siteName}.mysharefox.com/embed.min.js`;
+        _script.src = embedUrl || `https://${siteName}.mysharefox.com/embed.min.js`;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         _script['data-shop'] = siteName;
         _script.id = "sharefox-embed-script";
         _script.async = true;
+        if(hostname)
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            _script['data-hostname'] = hostname;
 
         setTimeout(() => {
             document.body.appendChild(_script);
@@ -35,11 +43,11 @@ export const useSiteScript = () => {
         return () => {
             try {
                 document.body.removeChild(_script);
-            } catch(err) {
-                console.warn("Unable to remove child.")
+            } catch(err: unknown) {
+                console.warn("Unable to remove child.", err);
             }
         }
-    }, [script, siteName, embedType, embedProps, embedStyle]);
+    }, [script, siteName, embedType, embedProps, embedStyle, embedUrl]);
 
     return script;
 }

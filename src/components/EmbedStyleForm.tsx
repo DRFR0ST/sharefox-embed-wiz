@@ -1,31 +1,52 @@
 import { useFormContext } from "react-hook-form";
-import { Box, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { embedStyleState, siteNameState } from "../store";
+import { useEffect } from "react";
 
 interface EmbedStyleForm {
 
 }
 
 const EmbedStyleForm = ({ }: EmbedStyleForm) => {
-    const { register, formState: { errors } } = useFormContext();
+    const [embedStyle, setEmbedStyle] = useRecoilState(embedStyleState);
+    useRecoilValue(siteNameState);
+    const { register, formState: { errors }, setValue } = useFormContext();
+
+    // Update form values when embedStyle changes
+    useEffect(() => {
+        setValue("width", embedStyle.width);
+        setValue("height", embedStyle.height);
+    }, [embedStyle, setValue]);
 
     return (
         <>
             <TextField
                 fullWidth
                 label="Width"
-                type="string"
+                type="number"
                 helperText="The width of the iframe inside of which the embed will be displayed."
                 error={Boolean(errors["width"])}
-                {...register("width", { required: true })}
+                slotProps={{
+                    input: {
+                        endAdornment: "px",
+                    }
+                }}
+                {...register("width", { required: true, onChange: (e) => setEmbedStyle((prev) => ({ ...prev, width: e.target.value })) })}
             />
 
             <TextField
                 fullWidth
                 label="Height"
-                type="string"
+                type="number"
                 helperText="The height of the iframe inside of which the embed will be displayed."
                 error={Boolean(errors["height"])}
-                {...register("height", { required: true })}
+                slotProps={{
+                    input: {
+                        endAdornment: "px",
+                    }
+                }}
+                {...register("height", { required: true, onChange: (e) => setEmbedStyle((prev) => ({ ...prev, height: e.target.value })) })}
             />
         </>
     )

@@ -17,17 +17,21 @@ import { EmbedType } from "./types";
 
 export const EMBED_STYLE = {
     'popular-products': {
-        width: "850px",
-        height: "284px"
+        width: 850,
+        height: 284
     },
     'simple-search': {
-        width: "850px",
-        height: "66px"
+        width: 850,
+        height: 66
     },
     'advanced-search': {
-        width: "346px",
-        height: "440px"
-    }
+        width: 346,
+        height: 440
+    },
+    'product-booking': {
+        width: 440,
+        height: 680
+    },
 }
 
 export const EMBED_FIELDS: Record<EmbedType, Record<string, { type: string, value: any, label: string, description: string }>> = {
@@ -53,6 +57,14 @@ export const EMBED_FIELDS: Record<EmbedType, Record<string, { type: string, valu
             value: "/products",
             label: "Products Path",
             description: "The subpage of the “products” page. It will be used in the redirect after submitting the search query.",
+        }
+    },
+    'product-booking': {
+        'product-id': {
+            type: "number",
+            value: 1021,
+            label: "Product ID",
+            description: "The ID of the product to display in the embed."
         }
     }
 }

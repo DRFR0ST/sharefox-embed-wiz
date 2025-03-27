@@ -32,18 +32,28 @@ function App() {
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        
+
         <Stack direction="row" width="100vw" height="100vh">
-          <Box sx={{ flex: 2, height: "100%" }}>
+          <Box
+            sx={{
+              flex: 3,
+              minWidth: "300px",
+              maxWidth: "480px",
+              marginTop: "1vh",
+              marginLeft: "1vh",
+              marginRight: "12px",
+              height: "98vh"
+            }}
+          >
             <Sidebar />
           </Box>
-          <Box sx={{ flex: 6, height: "100%" }}>
+          <Box sx={{ flex: 6, height: "100vh" }}>
             <Main />
           </Box>
         </Stack>
       </ThemeProvider>
     </RecoilRoot>
-  )
+  );
 }
 
 export default App

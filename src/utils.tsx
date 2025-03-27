@@ -15,6 +15,8 @@ export const generateEmbedDivEl = ({ embedType, siteName }: { embedType: string,
             return <div data-path="search" className="sharefox-embed" style={{ "width": "100%", "height": "90px" }}></div>;
         case 'advanced-search':
             return <div data-path="search-advanced" className="sharefox-embed" style={{ "width": "346px", "height": "440px" }}></div>;
+        case 'product-booking':
+            return <div data-path="product-booking" data-id="1021" className="sharefox-embed" style={{ "width": "346px", "height": "440px" }}></div>;
     }
 }
 
@@ -34,6 +36,10 @@ export const generateEmbedDiv = ({ embedType, siteName }: { embedType: string, s
 
     try {
         for(const prop in embedStyle) {
+            if(prop === "width" || prop === "height") {
+                style += `${prop}: ${embedStyle[prop]}px;`;
+                continue;
+            }
             style += `${prop}: ${embedStyle[prop]};`;
         }
     } catch(err) {
@@ -47,8 +53,10 @@ export const generateEmbedDiv = ({ embedType, siteName }: { embedType: string, s
             return `<div data-path="search" class="sharefox-embed" data-shop="${siteName}"${props} style="${style}"></div>`;
         case 'advanced-search':
             return `<div data-path="search-advanced" class="sharefox-embed" data-shop="${siteName}"${props} style="${style}"></div>`;
-        case 'product-booking':
-            return `<div data-path="product-booking" class="sharefox-embed" data-shop="${siteName}"${props} style="${style}"></div>`;
+        case 'product-booking': {
+            const adjustedProps = props.replace("data-product-id=", "data-id=");
+            return `<div data-path="product-booking" class="sharefox-embed" data-shop="${siteName}"${adjustedProps} style="${style}"></div>`;
+        }
     }
 }
 

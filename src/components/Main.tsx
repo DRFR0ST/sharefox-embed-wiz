@@ -8,6 +8,7 @@ import * as monaco from 'monaco-editor';
 import { useSiteScript } from "../hooks";
 import CodePreview from "./CodePreview";
 import EmbedPreview from "./EmbedPreview";
+import ErrorBoundary from "./ErrorBoundary";
 
 loader.config({ monaco });
 
@@ -41,9 +42,13 @@ function Main() {
         </Stack>
 
         <Stack direction="column" width="100%" height="calc(100vh-64px)" alignItems="center" justifyContent="center">
-            <EmbedPreview div={div} />
+            <ErrorBoundary>
+                <EmbedPreview div={div} />
+            </ErrorBoundary>
 
-            <CodePreview div={div} script={script} />
+            <ErrorBoundary>
+                <CodePreview div={div} script={script} />
+            </ErrorBoundary>
         </Stack>
     </Container>
 }

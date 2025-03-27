@@ -4,11 +4,29 @@ import { EmbedType } from "./types";
 import { flattenEmbedFields } from "./utils";
 
 /**
+ * A custom effect to persist the state in localStorage.
+ * It sets the initial value from localStorage if it exists,
+ * and updates localStorage whenever the state changes.
+ */
+const localStorageEffect = (key: string) => 
+  ({ setSelf, onSet }: { setSelf: (value: any) => void; onSet: (callback: (newValue: any) => void) => void }) => {
+    const savedValue = localStorage.getItem(key);
+    if (savedValue != null) {
+      setSelf(JSON.parse(savedValue));
+    }
+
+    onSet((newValue) => {
+      localStorage.setItem(key, JSON.stringify(newValue));
+    });
+  };
+
+/**
  * The Sharefox site name/merchant slug.
  */
 export const siteNameState = atom({
   key: 'siteNameState',
   default: 'carrentaltestsite',
+  effects: [localStorageEffect('siteNameState')],
 });
 
 /**
@@ -17,6 +35,7 @@ export const siteNameState = atom({
 export const hostnameState = atom({
   key: 'hostnameState',
   default: '',
+  effects: [localStorageEffect('hostnameState')],
 });
 
 /**
@@ -25,6 +44,7 @@ export const hostnameState = atom({
 export const embedUrlState = atom({
   key: 'embedUrlState',
   default: ``,
+  effects: [localStorageEffect('embedUrlState')],
 });
 
 /**
@@ -33,6 +53,7 @@ export const embedUrlState = atom({
 export const embedTypeState = atom<EmbedType>({
   key: 'embedTypeState',
   default: EmbedType.PopularProducts,
+  effects: [localStorageEffect('embedTypeState')],
 });
 
 /**
@@ -40,7 +61,8 @@ export const embedTypeState = atom<EmbedType>({
  */
 export const embedPropsState = atom({
   key: 'embedPropsState',
-  default: flattenEmbedFields(EMBED_FIELDS[EmbedType.PopularProducts])
+  default: flattenEmbedFields(EMBED_FIELDS[EmbedType.PopularProducts]),
+  effects: [localStorageEffect('embedPropsState')],
 });
 
 /**
@@ -48,5 +70,6 @@ export const embedPropsState = atom({
  */
 export const embedStyleState = atom({
   key: 'embedStyleState',
-  default: EMBED_STYLE[EmbedType.PopularProducts]
+  default: EMBED_STYLE[EmbedType.PopularProducts],
+  effects: [localStorageEffect('embedStyleState')],
 });

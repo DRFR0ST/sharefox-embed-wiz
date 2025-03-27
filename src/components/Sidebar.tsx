@@ -9,6 +9,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { useRef, useState } from "react";
 import Form from "./Form";
 import { flattenEmbedFields } from "../utils";
+import ErrorBoundary from "./ErrorBoundary";
 
 function Sidebar() {
     const [siteName, setSiteName] = useRecoilState(siteNameState);
@@ -51,52 +52,52 @@ function Sidebar() {
     }
 
     return <Container sx={{ backgroundColor: theme.palette.background.paper, height: "inherit", borderRadius: theme.shape.borderRadius, py: 2 }}>
-        <Stack justifyContent="space-between" alignItems="center" height="100%" width="100%">
-            <Stack alignItems="center" justifyContent="center" width="70%" spacing={1} pt={2}>
-                <img src="https://sharefox.co/wp-content/uploads/2022/05/Sharefox_logo_dark.svg" alt="Sharefox Logo" />
-                <Typography style={{ opacity: 0.6 }}>Embed Wizard</Typography>
+        <ErrorBoundary>
+            <Stack justifyContent="space-between" alignItems="center" height="100%" width="100%">
+                <Stack alignItems="center" justifyContent="center" width="60%" spacing={1} pt={2}>
+                    <img src="https://sharefox.co/wp-content/uploads/2022/05/Sharefox_logo_dark.svg" alt="Sharefox Logo" />
+                    <Typography style={{ opacity: 0.6 }}>Embed Wizard</Typography>
+                </Stack>
+
+                <Stack spacing={2} direction="column" height="100%" width="100%" alignItems="center" justifyContent="center">
+                    <Box width="100%" >
+                        <TextField 
+                            fullWidth 
+                            variant="outlined" 
+                            value={siteName} 
+                            onChange={handleSiteName} 
+                            label="Site name"
+                            InputProps={{
+                                endAdornment: <Tooltip title={siteExists ? "Valid site" : "Invalid site"}>
+                                    <IconButton size="small">
+                                        {siteExists ? <CheckCircleIcon style={{ color: "#4b635c" }} fontSize={"10px"} /> : <ErrorIcon style={{ color: "#ba1a1a" }} fontSize={"10px"} />}
+                                    </IconButton>
+                                </Tooltip>
+                            }} />
+                    </Box>
+                    <Box width="100%">
+                        <FormControl fullWidth>
+                            <InputLabel id="embed-type-select-label">Embed Type</InputLabel>
+                            <Select label="Embed Type" labelId="embed-type-select-label" id="embed-type" fullWidth value={embedType} onChange={onEmbedTypeChange}>
+                                <MenuItem value={EmbedType.PopularProducts}>Popular Products</MenuItem>
+                                <MenuItem value={EmbedType.SimpleSearch}>Simple Search</MenuItem>
+                                <MenuItem value={EmbedType.AdvancedSearch}>Advanced Search</MenuItem>
+                                <MenuItem value={EmbedType.ProductBooking}>Product Booking</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+
+                    <Box paddingY={1}>
+                        <Divider />
+                    </Box>
+
+                    <Form />
+                </Stack>
+                <Stack>
+                    <Typography fontSize={11}>Made with <Favorite sx={{ fontSize: 9, color: "#FF0000" }} /> by Mike @ Sharefox</Typography>
+                </Stack>
             </Stack>
-
-            <Stack spacing={2} direction="column" height="100%" width="100%" alignItems="center" justifyContent="center">
-                <Box width="100%" >
-                    <TextField 
-                        fullWidth 
-                        variant="outlined" 
-                        value={siteName} 
-                        onChange={handleSiteName} 
-                        label="Site name"
-                        InputProps={{
-                            endAdornment: <Tooltip title={siteExists ? "Valid site" : "Invalid site"}>
-                                <IconButton size="small">
-                                    {siteExists ? <CheckCircleIcon style={{ color: "#4b635c" }} fontSize={"10px"} /> : <ErrorIcon style={{ color: "#ba1a1a" }} fontSize={"10px"} />}
-                                </IconButton>
-                            </Tooltip>
-                        }} />
-                </Box>
-                <Box width="100%">
-                    <FormControl fullWidth>
-                        <InputLabel id="embed-type-select-label">Embed Type</InputLabel>
-                        <Select label="Embed Type" labelId="embed-type-select-label" id="embed-type" fullWidth value={embedType} onChange={onEmbedTypeChange}>
-                            <MenuItem value={EmbedType.PopularProducts}>Popular Products</MenuItem>
-                            <MenuItem value={EmbedType.SimpleSearch}>Simple Search</MenuItem>
-                            <MenuItem value={EmbedType.AdvancedSearch}>Advanced Search</MenuItem>
-                            <MenuItem value={EmbedType.ProductBooking}>Product Booking</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Box>
-
-                <Box paddingY={1}>
-                    <Divider />
-                </Box>
-
-                <Typography gutterBottom style={{ opacity: 0.6 }}>Embed Properties</Typography>
-
-                <Form />
-            </Stack>
-            <Stack>
-                <Typography fontSize={11}>Made with <Favorite sx={{ fontSize: 9, color: "#FF0000" }} /> by Mike @ Sharefox</Typography>
-            </Stack>
-        </Stack>
+        </ErrorBoundary>
     </Container>
 }
 

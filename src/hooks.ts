@@ -16,7 +16,7 @@ export const useSiteScript = () => {
     const hostname = useRecoilValue(hostnameState);
     const embedUrl = useRecoilValue(embedUrlState);
 
-    const script = useMemo(() => generateEmbedScript({ siteName, hostname }), [siteName, hostname]);
+    const script = useMemo(() => generateEmbedScript({ siteName, hostname, embedUrl }), [siteName, hostname, embedUrl]);
 
     useEffect(() => {
         if(!siteName) {
@@ -47,7 +47,7 @@ export const useSiteScript = () => {
                 console.warn("Unable to remove child.", err);
             }
         }
-    }, [script, siteName, embedType, embedProps, embedStyle]);
+    }, [script, siteName, embedType, embedProps, embedStyle, embedUrl]);
 
     return script;
 }

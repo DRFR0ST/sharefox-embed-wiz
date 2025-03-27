@@ -28,6 +28,8 @@ const EmbedPreview = ({div}: {div: string|undefined}) => {
 
     const embedContainerRef = useRef(null);
 
+    const borderWidth = 4;
+
     useEffect(() => {
         const tmOut = setTimeout(() => {
             const boundingClientRect = embedContainerRef?.current?.getBoundingClientRect();
@@ -40,8 +42,8 @@ const EmbedPreview = ({div}: {div: string|undefined}) => {
             }
 
             setEmbedContainerRect({
-                width: boundingClientRect.width.toFixed(0),
-                height: boundingClientRect.height.toFixed(0)
+                width: boundingClientRect.width.toFixed(0) - (borderWidth * 2),
+                height: boundingClientRect.height.toFixed(0) - (borderWidth * 2)
             });
         }, 800);
 
@@ -51,8 +53,8 @@ const EmbedPreview = ({div}: {div: string|undefined}) => {
     }, [embedType]);
 
 
-    return            <Stack alignItems="center" justifyContent="center" width="100%" height="70vh">
-    {mountDiv && <div ref={embedContainerRef} style={{ overflow: "hidden", resize: "both", position: "relative", display: 'flex', alignItems: 'center', justifyContent: 'center', border: `4px dashed #dcdfdd` }} key={Math.random().toString() + embedType} dangerouslySetInnerHTML={{ __html: div! }} />}
+    return            <Stack alignItems="center" justifyContent="center" width="100%" height="70vh" maxWidth="100%">
+    {mountDiv && <div ref={embedContainerRef} style={{ overflow: "hidden", resize: "both", position: "relative", display: 'flex', alignItems: 'center', justifyContent: 'center', border: `${borderWidth}px dashed #dcdfdd` }} key={Math.random().toString() + embedType} dangerouslySetInnerHTML={{ __html: div! }} />}
     {embedContainerRect.width ? <Typography sx={{ mt: 1, opacity: 0.4 }} fontSize={13}>{embedContainerRect.width} x {embedContainerRect.height}</Typography> : null}
 </Stack>
 }

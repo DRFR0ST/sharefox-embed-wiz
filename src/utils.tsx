@@ -1,7 +1,10 @@
 import { EMBED_FIELDS } from "./constants";
 
-export const generateEmbedScript = ({siteName}: { siteName: string }) => {
-    return `<script id="sharefox-embed-script" data-shop="${siteName}" src="https://${siteName}.mysharefox.com/embed.min.js" async></script>`;
+export const generateEmbedScript = ({siteName, hostname, embedUrl }: { siteName: string, hostname?: string, embedUrl?: string }) => {
+    const _hostname = hostname ? ` data-hostname="${hostname}"` : "";
+    const _src = embedUrl ? `src="${embedUrl}"` : `src="https://${siteName}.mysharefox.com/embed.min.js"`;
+
+    return `<script id="sharefox-embed-script" data-shop="${siteName}"${_hostname} ${_src} async></script>`;
 }
 
 export const generateEmbedDivEl = ({ embedType, siteName }: { embedType: string, siteName: string }) => {

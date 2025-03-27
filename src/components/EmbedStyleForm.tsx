@@ -1,13 +1,16 @@
 import { useFormContext } from "react-hook-form";
-import { Box, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
+import { useRecoilValue } from "recoil";
+import { siteNameState } from "../store";
 
 interface EmbedStyleForm {
 
 }
 
 const EmbedStyleForm = ({ }: EmbedStyleForm) => {
+    useRecoilValue(siteNameState);
     const { register, formState: { errors } } = useFormContext();
-
+    
     return (
         <>
             <TextField

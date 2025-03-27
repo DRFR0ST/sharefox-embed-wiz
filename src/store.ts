@@ -12,6 +12,22 @@ export const siteNameState = atom({
 });
 
 /**
+ * The Sharefox Embed hostname.
+ */
+export const hostnameState = atom({
+  key: 'hostnameState',
+  default: '',
+});
+
+/**
+ * The url to the embed script.
+ */
+export const embedUrlState = atom({
+  key: 'embedUrlState',
+  default: ``,
+});
+
+/**
  * The selected type of the embed.
  */
 export const embedTypeState = atom<EmbedType>({

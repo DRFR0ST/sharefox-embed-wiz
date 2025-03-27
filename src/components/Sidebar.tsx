@@ -50,7 +50,7 @@ function Sidebar() {
         }, 700);
     }
 
-    return <Container sx={{ backgroundColor: theme.palette.background.paper, height: "98%", marginTop: "2%", marginLeft: "2%", marginRight: "10px", borderRadius: theme.shape.borderRadius, py: 2 }}>
+    return <Container sx={{ backgroundColor: theme.palette.background.paper, height: "inherit", borderRadius: theme.shape.borderRadius, py: 2 }}>
         <Stack justifyContent="space-between" alignItems="center" height="100%" width="100%">
             <Stack alignItems="center" justifyContent="center" width="70%" spacing={1} pt={2}>
                 <img src="https://sharefox.co/wp-content/uploads/2022/05/Sharefox_logo_dark.svg" alt="Sharefox Logo" />

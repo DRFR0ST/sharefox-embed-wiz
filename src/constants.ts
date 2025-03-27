@@ -29,8 +29,8 @@ export const EMBED_STYLE = {
         height: 440
     },
     'product-booking': {
-        width: 420,
-        height: 650
+        width: 440,
+        height: 680
     },
 }
 

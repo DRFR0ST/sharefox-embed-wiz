@@ -38,10 +38,11 @@ function App() {
             sx={{
               flex: 3,
               minWidth: "300px",
-              marginTop: "1%",
-              marginLeft: "1%",
+              maxWidth: "480px",
+              marginTop: "1vh",
+              marginLeft: "1vh",
               marginRight: "12px",
-              height: "99%",
+              height: "98vh"
             }}
           >
             <Sidebar />

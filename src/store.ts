@@ -66,6 +66,14 @@ export const embedPropsState = atom({
 });
 
 /**
+ * The data-staging attribute for the embed script.
+ */
+export const dataStagingState = atom({
+  key: "dataStagingState",
+  default: false,
+});
+
+/**
  * The style applied to the active embed.
  */
 export const embedStyleState = atom({

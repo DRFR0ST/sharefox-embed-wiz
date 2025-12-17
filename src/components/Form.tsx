@@ -1,50 +1,60 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import { embedPropsState, embedStyleState, embedTypeState, embedUrlState, hostnameState, siteNameState } from "../store";
+import {
+  dataStagingState,
+  embedPropsState,
+  embedStyleState,
+  embedTypeState,
+  embedUrlState,
+  hostnameState,
+  siteNameState,
+} from "../store";
 import { EMBED_FIELDS, EMBED_STYLE } from "../constants";
-import { useMemo } from "react";
-import { Box, Button, IconButton, Stack, Tooltip, Typography } from "@mui/material";
+import { useEffect, useMemo } from "react";
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import EmbedPropsForm from "./EmbedPropsForm";
 import { flattenEmbedFields } from "../utils";
 import EmbedStyleForm from "./EmbedStyleForm";
 import EmbedAdvancedForm from "./EmbedAdvancedForm";
 import { SettingsBackupRestore } from "@mui/icons-material";
 
-interface Form {
+interface Form {}
 
-}
-
-const Form = ({ }: Form) => {
+const Form = ({}: Form) => {
   const [embedType] = useRecoilState(embedTypeState);
   const [siteName] = useRecoilState(siteNameState);
 
-  const [, setEmbedProps] = useRecoilState(embedPropsState);
-  const [, setEmbedStyle] = useRecoilState(embedStyleState);
+  const [embedProps, setEmbedProps] = useRecoilState(embedPropsState);
+  const [embedStyle, setEmbedStyle] = useRecoilState(embedStyleState);
 
-  const [, setHostname] = useRecoilState(hostnameState);
-  const [, setEmbedUrl] = useRecoilState(embedUrlState);
+  const [hostname, setHostname] = useRecoilState(hostnameState);
+  const [embedUrl, setEmbedUrl] = useRecoilState(embedUrlState);
+  const [dataStaging, setDataStaging] = useRecoilState(dataStagingState);
 
   const defaultValues = useMemo(() => {
-    const ep = EMBED_FIELDS[embedType];
-    const es = EMBED_STYLE[embedType];
-    const eao = {
-      hostname: "",
-      embedUrl: "",
-    };
-
-    const flattenedProps = flattenEmbedFields(ep);
-
-    return { ...flattenedProps, ...es, ...eao };
-  }, [embedType]);
+    return { ...embedProps, ...embedStyle, hostname, embedUrl, dataStaging };
+  }, [embedProps, embedStyle, hostname, embedUrl, dataStaging]);
 
   const methods = useForm<any>({ defaultValues });
-  
+
+  useEffect(() => {
+    methods.reset(defaultValues);
+  }, [defaultValues, methods]);
+
   const onSubmit: SubmitHandler<any> = (data) => {
-    const { width, height, embedUrl, hostname, ...props } = data;
+    const { width, height, embedUrl, hostname, dataStaging, ...props } = data;
 
     setEmbedStyle({ width, height });
     setHostname(hostname);
     setEmbedUrl(embedUrl || `https://${siteName}.mysharefox.com/embed.min.js`);
+    setDataStaging(dataStaging);
     setEmbedProps(props);
   };
 
@@ -56,6 +66,7 @@ const Form = ({ }: Form) => {
     setEmbedStyle(EMBED_STYLE[embedType]);
     setHostname("");
     setEmbedUrl("");
+    setDataStaging(false);
 
     methods.reset();
   };
@@ -112,6 +123,6 @@ const Form = ({ }: Form) => {
       </FormProvider>
     </>
   );
-}
+};
 
 export default Form;

@@ -1,6 +1,12 @@
 import { Button, Container, Stack, useTheme } from "@mui/material";
 import { useRecoilValue } from "recoil";
-import { embedPropsState, embedStyleState, embedTypeState, siteNameState } from "../store";
+import {
+  dataStagingState,
+  embedPropsState,
+  embedStyleState,
+  embedTypeState,
+  siteNameState,
+} from "../store";
 import { useMemo } from "react";
 import { generateEmbedDiv } from "../utils";
 import { loader } from '@monaco-editor/react';
@@ -33,8 +39,17 @@ function Main() {
     const embedType = useRecoilValue(embedTypeState);
     const embedProps = useRecoilValue(embedPropsState);
     const embedStyle = useRecoilValue(embedStyleState);
+    const dataStaging = useRecoilValue(dataStagingState);
 
-    const div = useMemo(() => generateEmbedDiv({ siteName, embedType }, embedProps, embedStyle), [siteName, embedType, embedProps, embedStyle]);
+    const div = useMemo(
+      () =>
+        generateEmbedDiv(
+          { siteName, embedType, dataStaging },
+          embedProps,
+          embedStyle
+        ),
+      [siteName, embedType, embedProps, embedStyle, dataStaging]
+    );
 
     return <Container sx={{ backgroundColor: theme.palette.background.default, height: "100%" }}>
         <Stack width="100%" direction="row" justifyContent="flex-end" alignItems="center" height="64px">

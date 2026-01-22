@@ -52,13 +52,21 @@ export const useSiteScript = () => {
 
     _script.setAttribute("data-staging", dataStaging ? "true" : "false");
 
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
+      // Remove any existing script with the same ID before appending a new one
+      const existingScript = document.getElementById("sharefox-embed-script");
+      if (existingScript) {
+        existingScript.remove();
+      }
       document.body.appendChild(_script);
     }, 500);
 
     return () => {
+      clearTimeout(timeoutId);
       try {
-        document.body.removeChild(_script);
+        if (document.body.contains(_script)) {
+          document.body.removeChild(_script);
+        }
       } catch (err: unknown) {
         console.warn("Unable to remove child.", err);
       }

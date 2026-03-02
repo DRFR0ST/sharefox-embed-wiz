@@ -92,6 +92,14 @@ export const useOtpState = atom({
 });
 
 /**
+ * A counter incremented every time Generate is clicked.
+ */
+export const updateCountState = atom({
+  key: "updateCountState",
+  default: 0,
+});
+
+/**
  * The style applied to the active embed.
  */
 export const embedStyleState = atom({

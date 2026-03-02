@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
-import { embedTypeState, embedStyleState } from "../store";
+import { embedTypeState, embedStyleState, updateCountState } from "../store";
 import { Stack, Typography } from "@mui/material";
 
 const EmbedPreview = ({div}: {div: string|undefined}) => {
@@ -21,6 +21,7 @@ const EmbedPreview = ({div}: {div: string|undefined}) => {
     }, [embedType]);
 
     const embedStyle = useRecoilValue(embedStyleState);
+    const updateCount = useRecoilValue(updateCountState);
     const embedContainerRect = embedStyle;
 
     const embedContainerRef = useRef(null);
@@ -66,7 +67,7 @@ const EmbedPreview = ({div}: {div: string|undefined}) => {
               justifyContent: "center",
               border: `${borderWidth}px dashed #dcdfdd`,
             }}
-            key={embedType}
+            key={updateCount}
             dangerouslySetInnerHTML={{ __html: div! }}
           ></div>
         )}

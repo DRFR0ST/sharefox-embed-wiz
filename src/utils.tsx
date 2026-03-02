@@ -136,6 +136,8 @@ export const generateEmbedDiv = (
       const adjustedProps = props.replace("data-product-id=", "data-id=");
       return `<div data-path="product-booking" class="sharefox-embed" data-shop="${siteName}"${adjustedProps} style="${style}"></div>`;
     }
+    default:
+      return "";
   }
 };
 

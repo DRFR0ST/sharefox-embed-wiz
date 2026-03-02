@@ -10,6 +10,7 @@ import {
   siteNameState,
   localeState,
   useOtpState,
+  updateCountState,
 } from "../store";
 import { EMBED_FIELDS, EMBED_STYLE } from "../constants";
 import { useEffect, useMemo } from "react";
@@ -41,6 +42,7 @@ const Form = ({}: Form) => {
   const [dataStaging, setDataStaging] = useRecoilState(dataStagingState);
   const [locale, setLocale] = useRecoilState(localeState);
   const [useOtp, setUseOtp] = useRecoilState(useOtpState);
+  const [updateCount, setUpdateCount] = useRecoilState(updateCountState);
 
   const defaultValues = useMemo(() => {
     return { ...embedProps, ...embedStyle, hostname, embedUrl, dataStaging, locale, useOtp };
@@ -53,18 +55,31 @@ const Form = ({}: Form) => {
   }, [defaultValues, methods]);
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    const { width, height, embedUrl, hostname, dataStaging, locale, useOtp, ...props } = data;
+    const { 
+      width: formWidth, 
+      height: formHeight, 
+      embedUrl: formEmbedUrl, 
+      hostname: formHostname, 
+      dataStaging: formDataStaging, 
+      locale: formLocale, 
+      useOtp: formUseOtp, 
+      ...props 
+    } = data;
 
-    setEmbedStyle({ width, height });
+    setEmbedStyle({ 
+      width: formWidth || embedStyle.width, 
+      height: formHeight || embedStyle.height 
+    });
     
-    const cleanLocale = locale ? locale.replace(/^\/+|\/+$/g, '') : '';
+    const cleanLocale = formLocale ? String(formLocale).replace(/^\/+|\/+$/g, '') : '';
     
-    setHostname(hostname);
-    setEmbedUrl(embedUrl || `https://${siteName}.mysharefox.com/embed.min.js`);
-    setDataStaging(dataStaging);
+    setHostname(formHostname || "");
+    setEmbedUrl(formEmbedUrl || `https://${siteName}.mysharefox.com/embed.min.js`);
+    setDataStaging(Boolean(formDataStaging));
     setLocale(cleanLocale);
-    setUseOtp(useOtp);
+    setUseOtp(Boolean(formUseOtp));
     setEmbedProps(props);
+    setUpdateCount(prev => prev + 1);
   };
 
   /**

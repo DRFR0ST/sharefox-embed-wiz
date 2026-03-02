@@ -7,6 +7,7 @@ import {
   embedTypeState,
   siteNameState,
   useOtpState,
+  localeState,
 } from "../store";
 import { useMemo } from "react";
 import { generateEmbedDiv } from "../utils";
@@ -42,15 +43,16 @@ function Main() {
     const embedStyle = useRecoilValue(embedStyleState);
     const dataStaging = useRecoilValue(dataStagingState);
     const useOtp = useRecoilValue(useOtpState);
+    const locale = useRecoilValue(localeState);
 
     const div = useMemo(
       () =>
         generateEmbedDiv(
-          { siteName, embedType, dataStaging, useOtp },
+          { siteName, embedType, dataStaging, useOtp, locale },
           embedProps,
           embedStyle
         ),
-      [siteName, embedType, embedProps, embedStyle, dataStaging, useOtp]
+      [siteName, embedType, embedProps, embedStyle, dataStaging, useOtp, locale]
     );
 
     return <Container sx={{ backgroundColor: theme.palette.background.default, height: "100%" }}>

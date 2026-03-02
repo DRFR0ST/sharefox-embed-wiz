@@ -56,19 +56,11 @@ const Form = ({}: Form) => {
     const { width, height, embedUrl, hostname, dataStaging, locale, useOtp, ...props } = data;
 
     setEmbedStyle({ width, height });
-    setHostname(hostname);
-    let finalEmbedUrl = embedUrl || `https://${siteName}.mysharefox.com/embed.min.js`;
+    
     const cleanLocale = locale ? locale.replace(/^\/+|\/+$/g, '') : '';
     
-    if (cleanLocale) {
-      if (!finalEmbedUrl.includes(`/${cleanLocale}/embed.min.js`)) {
-        finalEmbedUrl = finalEmbedUrl.replace(/(?:\/[a-zA-Z]{2,3})?\/embed\.min\.js/, `/${cleanLocale}/embed.min.js`);
-      }
-    } else {
-      finalEmbedUrl = finalEmbedUrl.replace(/\/[a-zA-Z]{2,3}\/embed\.min\.js/, '/embed.min.js');
-    }
-    
-    setEmbedUrl(finalEmbedUrl);
+    setHostname(hostname);
+    setEmbedUrl(embedUrl || `https://${siteName}.mysharefox.com/embed.min.js`);
     setDataStaging(dataStaging);
     setLocale(cleanLocale);
     setUseOtp(useOtp);

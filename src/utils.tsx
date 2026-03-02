@@ -6,16 +6,23 @@ export const generateEmbedScript = ({
   embedUrl,
   dataStaging,
   useOtp,
+  locale,
 }: {
   siteName: string;
   hostname?: string;
   embedUrl?: string;
   dataStaging?: boolean;
   useOtp?: boolean;
+  locale?: string;
 }) => {
+  let finalHostname = hostname || `https://${siteName}.mysharefox.com`;
+  if (locale) {
+    finalHostname = finalHostname.replace(/\/+$/, '') + `/${locale.replace(/^\/+/, '')}`;
+  }
+
   const _hostname =
-    hostname || (!dataStaging && siteName)
-      ? ` data-hostname="${hostname || `https://${siteName}.mysharefox.com`}"`
+    finalHostname || (!dataStaging && siteName)
+      ? ` data-hostname="${finalHostname}"`
       : "";
   const _dataStaging = ` data-staging="${dataStaging ? "true" : "false"}"`;
   const _useOtp = useOtp ? ` data-useotp="true"` : "";
@@ -78,7 +85,8 @@ export const generateEmbedDiv = (
     siteName,
     dataStaging,
     useOtp,
-  }: { embedType: string; siteName: string; dataStaging?: boolean; useOtp?: boolean },
+    locale,
+  }: { embedType: string; siteName: string; dataStaging?: boolean; useOtp?: boolean; locale?: string },
   embedProps: Record<string, any>,
   embedStyle: Record<string, any>
 ) => {

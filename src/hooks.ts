@@ -9,6 +9,7 @@ import {
   hostnameState,
   siteNameState,
   useOtpState,
+  localeState,
 } from "./store";
 import { generateEmbedScript } from "./utils";
 
@@ -26,10 +27,11 @@ export const useSiteScript = () => {
   const embedUrl = useRecoilValue(embedUrlState);
   const dataStaging = useRecoilValue(dataStagingState);
   const useOtp = useRecoilValue(useOtpState);
+  const locale = useRecoilValue(localeState);
 
   const script = useMemo(
-    () => generateEmbedScript({ siteName, hostname, embedUrl, dataStaging, useOtp }),
-    [siteName, hostname, embedUrl, dataStaging, useOtp]
+    () => generateEmbedScript({ siteName, hostname, embedUrl, dataStaging, useOtp, locale }),
+    [siteName, hostname, embedUrl, dataStaging, useOtp, locale]
   );
 
   useEffect(() => {
@@ -43,8 +45,13 @@ export const useSiteScript = () => {
     _script.setAttribute("data-shop", siteName);
     _script.id = "sharefox-embed-script";
     _script.async = true;
-    if (hostname) {
-      _script.setAttribute("data-hostname", hostname);
+    let finalHostname = hostname || `https://${siteName}.mysharefox.com`;
+    if (locale) {
+      finalHostname = finalHostname.replace(/\/+$/, '') + `/${locale.replace(/^\/+/, '')}`;
+    }
+
+    if (hostname || locale) {
+      _script.setAttribute("data-hostname", finalHostname);
     } else if (!dataStaging) {
       _script.setAttribute(
         "data-hostname",

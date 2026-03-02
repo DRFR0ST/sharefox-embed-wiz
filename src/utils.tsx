@@ -5,22 +5,25 @@ export const generateEmbedScript = ({
   hostname,
   embedUrl,
   dataStaging,
+  useOtp,
 }: {
   siteName: string;
   hostname?: string;
   embedUrl?: string;
   dataStaging?: boolean;
+  useOtp?: boolean;
 }) => {
   const _hostname =
     hostname || (!dataStaging && siteName)
       ? ` data-hostname="${hostname || `https://${siteName}.mysharefox.com`}"`
       : "";
   const _dataStaging = ` data-staging="${dataStaging ? "true" : "false"}"`;
+  const _useOtp = useOtp ? ` data-useotp="true"` : "";
   const _src = embedUrl
     ? `src="${embedUrl}"`
     : `src="https://${siteName}.mysharefox.com/embed.min.js"`;
 
-  return `<script id="sharefox-embed-script" data-shop="${siteName}"${_hostname}${_dataStaging} ${_src} async></script>`;
+  return `<script id="sharefox-embed-script" data-shop="${siteName}"${_hostname}${_dataStaging}${_useOtp} ${_src} async></script>`;
 };
 
 export const generateEmbedDivEl = ({
@@ -74,7 +77,8 @@ export const generateEmbedDiv = (
     embedType,
     siteName,
     dataStaging,
-  }: { embedType: string; siteName: string; dataStaging?: boolean },
+    useOtp,
+  }: { embedType: string; siteName: string; dataStaging?: boolean; useOtp?: boolean },
   embedProps: Record<string, any>,
   embedStyle: Record<string, any>
 ) => {
@@ -92,6 +96,10 @@ export const generateEmbedDiv = (
 
   if (dataStaging) {
     props += ` data-staging="true"`;
+  }
+
+  if (useOtp) {
+    props += ` data-useotp="true"`;
   }
 
   // Parse embedStyle into inline css

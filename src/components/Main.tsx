@@ -6,6 +6,7 @@ import {
   embedStyleState,
   embedTypeState,
   siteNameState,
+  useOtpState,
 } from "../store";
 import { useMemo } from "react";
 import { generateEmbedDiv } from "../utils";
@@ -40,15 +41,16 @@ function Main() {
     const embedProps = useRecoilValue(embedPropsState);
     const embedStyle = useRecoilValue(embedStyleState);
     const dataStaging = useRecoilValue(dataStagingState);
+    const useOtp = useRecoilValue(useOtpState);
 
     const div = useMemo(
       () =>
         generateEmbedDiv(
-          { siteName, embedType, dataStaging },
+          { siteName, embedType, dataStaging, useOtp },
           embedProps,
           embedStyle
         ),
-      [siteName, embedType, embedProps, embedStyle, dataStaging]
+      [siteName, embedType, embedProps, embedStyle, dataStaging, useOtp]
     );
 
     return <Container sx={{ backgroundColor: theme.palette.background.default, height: "100%" }}>
@@ -56,7 +58,7 @@ function Main() {
             <Button href="https://help.sharefox.no/article/580-sharefox-embed" target="_blank" variant="text">Help Article</Button>
         </Stack>
 
-        <Stack direction="column" width="100%" height="calc(100vh-64px)" alignItems="center" justifyContent="center">
+        <Stack direction="column" width="100%" minHeight="calc(100vh - 64px)" alignItems="center" justifyContent="center">
             <ErrorBoundary>
                 <EmbedPreview div={div} />
             </ErrorBoundary>

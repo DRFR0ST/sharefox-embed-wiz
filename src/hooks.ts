@@ -8,6 +8,7 @@ import {
   embedUrlState,
   hostnameState,
   siteNameState,
+  useOtpState,
 } from "./store";
 import { generateEmbedScript } from "./utils";
 
@@ -24,10 +25,11 @@ export const useSiteScript = () => {
   const hostname = useRecoilValue(hostnameState);
   const embedUrl = useRecoilValue(embedUrlState);
   const dataStaging = useRecoilValue(dataStagingState);
+  const useOtp = useRecoilValue(useOtpState);
 
   const script = useMemo(
-    () => generateEmbedScript({ siteName, hostname, embedUrl, dataStaging }),
-    [siteName, hostname, embedUrl, dataStaging]
+    () => generateEmbedScript({ siteName, hostname, embedUrl, dataStaging, useOtp }),
+    [siteName, hostname, embedUrl, dataStaging, useOtp]
   );
 
   useEffect(() => {
@@ -51,6 +53,10 @@ export const useSiteScript = () => {
     }
 
     _script.setAttribute("data-staging", dataStaging ? "true" : "false");
+    
+    if (useOtp) {
+      _script.setAttribute("data-useotp", "true");
+    }
 
     const timeoutId = setTimeout(() => {
       // Remove any existing script with the same ID before appending a new one
@@ -80,6 +86,7 @@ export const useSiteScript = () => {
     embedUrl,
     dataStaging,
     hostname,
+    useOtp,
   ]);
 
   return script;

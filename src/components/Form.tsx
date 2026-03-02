@@ -8,6 +8,8 @@ import {
   embedUrlState,
   hostnameState,
   siteNameState,
+  localeState,
+  useOtpState,
 } from "../store";
 import { EMBED_FIELDS, EMBED_STYLE } from "../constants";
 import { useEffect, useMemo } from "react";
@@ -37,10 +39,12 @@ const Form = ({}: Form) => {
   const [hostname, setHostname] = useRecoilState(hostnameState);
   const [embedUrl, setEmbedUrl] = useRecoilState(embedUrlState);
   const [dataStaging, setDataStaging] = useRecoilState(dataStagingState);
+  const [locale, setLocale] = useRecoilState(localeState);
+  const [useOtp, setUseOtp] = useRecoilState(useOtpState);
 
   const defaultValues = useMemo(() => {
-    return { ...embedProps, ...embedStyle, hostname, embedUrl, dataStaging };
-  }, [embedProps, embedStyle, hostname, embedUrl, dataStaging]);
+    return { ...embedProps, ...embedStyle, hostname, embedUrl, dataStaging, locale, useOtp };
+  }, [embedProps, embedStyle, hostname, embedUrl, dataStaging, locale, useOtp]);
 
   const methods = useForm<any>({ defaultValues });
 
@@ -49,12 +53,25 @@ const Form = ({}: Form) => {
   }, [defaultValues, methods]);
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    const { width, height, embedUrl, hostname, dataStaging, ...props } = data;
+    const { width, height, embedUrl, hostname, dataStaging, locale, useOtp, ...props } = data;
 
     setEmbedStyle({ width, height });
     setHostname(hostname);
-    setEmbedUrl(embedUrl || `https://${siteName}.mysharefox.com/embed.min.js`);
+    let finalEmbedUrl = embedUrl || `https://${siteName}.mysharefox.com/embed.min.js`;
+    const cleanLocale = locale ? locale.replace(/^\/+|\/+$/g, '') : '';
+    
+    if (cleanLocale) {
+      if (!finalEmbedUrl.includes(`/${cleanLocale}/embed.min.js`)) {
+        finalEmbedUrl = finalEmbedUrl.replace(/(?:\/[a-zA-Z]{2,3})?\/embed\.min\.js/, `/${cleanLocale}/embed.min.js`);
+      }
+    } else {
+      finalEmbedUrl = finalEmbedUrl.replace(/\/[a-zA-Z]{2,3}\/embed\.min\.js/, '/embed.min.js');
+    }
+    
+    setEmbedUrl(finalEmbedUrl);
     setDataStaging(dataStaging);
+    setLocale(cleanLocale);
+    setUseOtp(useOtp);
     setEmbedProps(props);
   };
 
@@ -67,6 +84,8 @@ const Form = ({}: Form) => {
     setHostname("");
     setEmbedUrl("");
     setDataStaging(false);
+    setLocale("");
+    setUseOtp(true);
 
     methods.reset();
   };

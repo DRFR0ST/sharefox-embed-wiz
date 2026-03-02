@@ -51,7 +51,7 @@ function Sidebar() {
         }, 700);
     }
 
-    return <Container sx={{ backgroundColor: theme.palette.background.paper, height: "inherit", borderRadius: theme.shape.borderRadius, py: 2 }}>
+    return <Container sx={{ backgroundColor: theme.palette.background.paper, height: "inherit", overflowY: "auto", borderRadius: theme.shape.borderRadius, py: 2 }}>
         <ErrorBoundary>
             <Stack justifyContent="space-between" alignItems="center" height="100%" width="100%">
                 <Stack alignItems="center" justifyContent="center" width="60%" spacing={1} pt={2}>

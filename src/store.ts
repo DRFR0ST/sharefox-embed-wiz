@@ -74,6 +74,24 @@ export const dataStagingState = atom({
 });
 
 /**
+ * The locale of the embed script (e.g. en, no).
+ */
+export const localeState = atom({
+  key: "localeState",
+  default: "",
+  effects: [localStorageEffect('localeState')],
+});
+
+/**
+ * The data-useotp attribute for the embed script and div.
+ */
+export const useOtpState = atom({
+  key: "useOtpState",
+  default: true,
+  effects: [localStorageEffect("useOtpState")],
+});
+
+/**
  * The style applied to the active embed.
  */
 export const embedStyleState = atom({

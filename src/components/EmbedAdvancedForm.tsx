@@ -56,7 +56,16 @@ const EmbedAdvancedForm = ({}: EmbedAdvancedFormProps) => {
             placeholder={`https://${siteName}.mysharefox.com/embed.min.js`}
             {...register("embedUrl", { required: false })}
           />
-          {/* <Controller
+          <TextField
+            fullWidth
+            label="Locale (Language)"
+            type="string"
+            helperText="Locale appended to URL (e.g., 'en', 'no')."
+            error={Boolean(errors["locale"])}
+            placeholder="en"
+            {...register("locale", { required: false })}
+          />
+          <Controller
             name="dataStaging"
             control={control}
             render={({ field }) => (
@@ -65,7 +74,17 @@ const EmbedAdvancedForm = ({}: EmbedAdvancedFormProps) => {
                 label="Use Staging Environment"
               />
             )}
-          /> */}
+          />
+          <Controller
+            name="useOtp"
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+                control={<Checkbox {...field} checked={field.value ?? true} />}
+                label="Use OTP Authentication"
+              />
+            )}
+          />
         </Stack>
       </AccordionDetails>
     </Accordion>

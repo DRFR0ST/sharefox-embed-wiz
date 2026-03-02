@@ -5,6 +5,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Autocomplete,
   Checkbox,
   FormControlLabel,
   Stack,
@@ -12,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { LOCALES } from "../constants";
 
 interface EmbedAdvancedFormProps {}
 
@@ -56,14 +58,29 @@ const EmbedAdvancedForm = ({}: EmbedAdvancedFormProps) => {
             placeholder={`https://${siteName}.mysharefox.com/embed.min.js`}
             {...register("embedUrl", { required: false })}
           />
-          <TextField
-            fullWidth
-            label="Locale (Language)"
-            type="string"
-            helperText="Locale appended to URL (e.g., 'en', 'no')."
-            error={Boolean(errors["locale"])}
-            placeholder="en"
-            {...register("locale", { required: false })}
+          <Controller
+            name="locale"
+            control={control}
+            render={({ field }) => (
+              <Autocomplete
+                {...field}
+                freeSolo
+                options={LOCALES}
+                value={field.value || ""}
+                onChange={(_, data) => field.onChange(data)}
+                onInputChange={(_, data) => field.onChange(data)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    fullWidth
+                    label="Locale (Language)"
+                    helperText="Locale appended to URL (e.g., 'en', 'no')."
+                    error={Boolean(errors["locale"])}
+                    placeholder="en"
+                  />
+                )}
+              />
+            )}
           />
           <Controller
             name="dataStaging"

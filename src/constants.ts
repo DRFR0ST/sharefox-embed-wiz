@@ -68,3 +68,5 @@ export const EMBED_FIELDS: Record<EmbedType, Record<string, { type: string, valu
         }
     }
 }
+
+export const LOCALES = ["en", "no", "dk", "sv"];

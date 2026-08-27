@@ -83,6 +83,7 @@ function Sidebar() {
                                 <MenuItem value={EmbedType.SimpleSearch}>Simple Search</MenuItem>
                                 <MenuItem value={EmbedType.AdvancedSearch}>Advanced Search</MenuItem>
                                 <MenuItem value={EmbedType.ProductBooking}>Product Booking</MenuItem>
+                                <MenuItem value={EmbedType.Product}>Product</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>

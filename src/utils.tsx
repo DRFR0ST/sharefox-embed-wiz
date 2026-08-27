@@ -76,6 +76,16 @@ export const generateEmbedDivEl = ({
           style={{ width: "346px", height: "440px" }}
         ></div>
       );
+    case "product":
+      return (
+        <div
+          data-path="product"
+          data-id="1006"
+          data-slug="rental-product-2"
+          className="sharefox-embed"
+          style={{ width: "300px", height: "300px" }}
+        ></div>
+      );
   }
 };
 
@@ -136,6 +146,8 @@ export const generateEmbedDiv = (
       const adjustedProps = props.replace("data-product-id=", "data-id=");
       return `<div data-path="product-booking" class="sharefox-embed" data-shop="${siteName}"${adjustedProps} style="${style}"></div>`;
     }
+    case "product":
+      return `<div data-path="product" class="sharefox-embed" data-shop="${siteName}"${props} style="${style}"></div>`;
     default:
       return "";
   }

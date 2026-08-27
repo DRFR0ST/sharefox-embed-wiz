@@ -32,6 +32,10 @@ export const EMBED_STYLE = {
         width: 440,
         height: 680
     },
+    'product': {
+        width: 300,
+        height: 550
+    },
 }
 
 export const EMBED_FIELDS: Record<EmbedType, Record<string, { type: string, value: any, label: string, description: string }>> = {
@@ -63,6 +67,14 @@ export const EMBED_FIELDS: Record<EmbedType, Record<string, { type: string, valu
         'product-id': {
             type: "number",
             value: 1021,
+            label: "Product ID",
+            description: "The ID of the product to display in the embed."
+        }
+    },
+    'product': {
+        id: {
+            type: "number",
+            value: 1006,
             label: "Product ID",
             description: "The ID of the product to display in the embed."
         }
